@@ -1,0 +1,1147 @@
+{
+// ========================================================================== //
+//                             OpenSees snippets                              //
+// ========================================================================== //
+	// General modelling commands
+      "model": {
+            "prefix": "model",
+            "body": [
+            "model BasicBuilder -ndm $ndm <-ndf $ndf>"
+            ],
+            "description": "Model command"
+      },
+      "node": {
+            "prefix": "node",
+            "body": [
+            "node $nodeTag (ndm $coords) <-mass (ndf $massValues)>"
+            ],
+            "description": "Node command"
+      },
+      "mass": {
+            "prefix": "mass",
+            "body": [
+            "mass $nodeTag (ndf $massValues)"
+            ],
+            "description": "Mass command"
+      },
+      "region": {
+            "prefix": "region",
+            "body": [
+            "region $regTag <-ele ($ele1 $ele2 ...)> <-eleRange $startEle $endEle> <-node ($node1 $node2 ...)> <-nodeRange $startNode $endNode> <-node all> <-rayleigh $alphaM $betaK $betaKinit $betaKcomm>"
+            ],
+            "description": "Region command"
+      },
+      "rayleigh": {
+            "prefix": "rayleigh",
+            "body": [
+            "rayleigh $alphaM $betaK $betaKinit $betaKcomm"
+            ],
+            "description": "Rayleigh command"
+      },
+	// Uniaxial materials
+      "uniaxialMaterial Steel01": {
+            "prefix": "uniaxialMaterial Steel01",
+            "body": [
+            "uniaxialMaterial Steel01 $matTag $Fy $E0 $b <$a1 $a2 $a3 $a4>"
+            ],
+            "description": "Uniaxialmaterial Steel01 command"
+      },
+      "uniaxialMaterial Hysteretic": {
+            "prefix": "uniaxialMaterial Hysteretic",
+            "body": [
+            "uniaxialMaterial Hysteretic $matTag $s1p $e1p $s2p $e2p <$s3p $e3p> $s1n $e1n $s2n $e2n <$s3n $e3n> $pinchX $pinchY $damage1 $damage2 <$beta>"
+            ],
+            "description": "Uniaxialmaterial Hysteretic command"
+      },
+      "uniaxialMaterial Concrete01": {
+            "prefix": "uniaxialMaterial Concrete01",
+            "body": [
+            "uniaxialMaterial Concrete01 $matTag $fpc $epsc0 $fpcu $epsU"
+            ],
+            "description": "Uniaxialmaterial Concrete01 command"
+      },
+      "uniaxialMaterial Elastic": {
+            "prefix": "uniaxialMaterial Elastic",
+            "body": [
+            "uniaxialMaterial Elastic $matTag $E <$eta> <$Eneg>"
+            ],
+            "description": "Uniaxialmaterial Elastic command"
+      },
+      "uniaxialMaterial ElasticPP": {
+            "prefix": "uniaxialMaterial ElasticPP",
+            "body": [
+            "uniaxialMaterial ElasticPP $matTag $E $epsyP <$epsyN $eps0>"
+            ],
+            "description": "Uniaxialmaterial Elasticpp command"
+      },
+      "uniaxialMaterial ElasticPPGap": {
+            "prefix": "uniaxialMaterial ElasticPPGap",
+            "body": [
+            "uniaxialMaterial ElasticPPGap $matTag $E $Fy $gap <$eta> <damage>"
+            ],
+            "description": "Uniaxialmaterial Elasticppgap command"
+      },
+      "uniaxialMaterial ENT": {
+            "prefix": "uniaxialMaterial ENT",
+            "body": [
+            "uniaxialMaterial ENT $matTag $E"
+            ],
+            "description": "Uniaxialmaterial Ent command"
+      },
+      "uniaxialMaterial Parallel": {
+            "prefix": "uniaxialMaterial Parallel",
+            "body": [
+            "uniaxialMaterial Parallel $matTag $tag1 $tag2 ... <-factors $fact1 $fact2 ...>"
+            ],
+            "description": "Uniaxialmaterial Parallel command"
+      },
+      "uniaxialMaterial Series": {
+            "prefix": "uniaxialMaterial Series",
+            "body": [
+            "uniaxialMaterial Series $matTag $tag1 $tag2 ..."
+            ],
+            "description": "Uniaxialmaterial Series command"
+      },
+	// Elements
+      "element zeroLength": {
+            "prefix": "element zeroLength",
+            "body": [
+            "element zeroLength $eleTag $iNode $jNode -mat $matTag1 $matTag2 ... -dir $dir1 $dir2 ...<-doRayleigh $rFlag> <-orient $x1 $x2 $x3 $yp1 $yp2 $yp3>"
+            ],
+            "description": "Element Zerolength command"
+      },
+      "element truss": {
+            "prefix": "element truss",
+            "body": [
+            "element truss $eleTag $iNode $jNode $A $matTag <-rho $rho> <-cMass $cFlag> <-doRayleigh $rFlag>"
+            ],
+            "description": "Element Truss command"
+      },
+      "element elasticBeamColumn (2D)": {
+            "prefix": "element elasticBeamColumn (2D)",
+            "body": [
+            "element elasticBeamColumn $eleTag $iNode $jNode $A $E $Iz $transfTag <-mass $massDens> <-cMass>"
+            ],
+            "description": "Element Elasticbeamcolumn (2D) command"
+      },
+      "element elasticBeamColumn (3D)": {
+            "prefix": "element elasticBeamColumn (3D)",
+            "body": [
+            "element elasticBeamColumn $eleTag $iNode $jNode $A $E $G $J $Iy $Iz $transfTag <-mass $massDens> <-cMass>"
+            ],
+            "description": "Element Elasticbeamcolumn (3D) command"
+      },
+	// Geometric transformations
+      "geomTransf Linear (2D)": {
+            "prefix": "geomTransf Linear (2D)",
+            "body": [
+            "geomTransf Linear $transfTag <-jntOffset $dXi $dYi $dXj $dYj>"
+            ],
+            "description": "Geomtransf Linear (2D) command"
+      },
+      "geomTransf Linear (3D)": {
+            "prefix": "geomTransf Linear (3D)",
+            "body": [
+            "geomTransf Linear $transfTag $vecxzX $vecxzY $vecxzZ <-jntOffset $dXi $dYi $dZi $dXj $dYj $dZj>"
+            ],
+            "description": "Geomtransf Linear (3D) command"
+      },
+      "geomTransf PDelta (2D)": {
+            "prefix": "geomTransf PDelta (2D)",
+            "body": [
+            "geomTransf PDelta $transfTag <-jntOffset $dXi $dYi $dXj $dYj>"
+            ],
+            "description": "Geomtransf Pdelta (2D) command"
+      },
+      "geomTransf PDelta (3D)": {
+            "prefix": "geomTransf PDelta (3D)",
+            "body": [
+            "geomTransf PDelta $transfTag $vecxzX $vecxzY $vecxzZ <-jntOffset $dXi $dYi $dZi $dXj $dYj $dZj>"
+            ],
+            "description": "Geomtransf Pdelta (3D) command"
+      },
+      "geomTransf Corotational (2D)": {
+            "prefix": "geomTransf Corotational (2D)",
+            "body": [
+            "geomTransf Corotational $transfTag <-jntOffset $dXi $dYi $dXj $dYj>"
+            ],
+            "description": "Geomtransf Corotational (2D) command"
+      },
+      "geomTransf Corotational (3D)": {
+            "prefix": "geomTransf Corotational (3D)",
+            "body": [
+            "geomTransf Corotational $transfTag $vecxzX $vecxzY $vecxzZ"
+            ],
+            "description": "Geomtransf Corotational (3D) command"
+      },
+	// Sections
+      "section Fiber": {
+            "prefix": "section Fiber",
+            "body": [
+            "section Fiber $secTag <-GJ $GJ> {\n\tfiber...\n\tpatch...\n\tlayer...\n\t...\n}"
+            ],
+            "description": "Section Fiber command"
+      },
+      "section NDFiber": {
+            "prefix": "section NDFiber",
+            "body": [
+            "section NDFiber $secTag {\n\tfiber...\n\tpatch...\n\tlayer...\n\t...\n}"
+            ],
+            "description": "Section Ndfiber command"
+      },
+      "section RCSection2d": {
+            "prefix": "section RCSection2d",
+            "body": [
+            "section RCSection2d $secTag $coreTag $coverTag $steelTag $d $b $cover $Atop $Abot $Aside $Nfcore $Nfcover $Nfs"
+            ],
+            "description": "Section Rcsection2D command"
+      },
+      "fiber": {
+            "prefix": "fiber",
+            "body": [
+            "fiber $yLoc $zLoc $A $matTag"
+            ],
+            "description": "Fiber command"
+      },
+      "patch quad": {
+            "prefix": "patch quad",
+            "body": [
+            "patch quad $matTag $numSubdivIJ $numSubdivJK $yI $zI $yJ $zJ $yK $zK $yL $zL"
+            ],
+            "description": "Patch Quad command"
+      },
+      "patch rect": {
+            "prefix": "patch rect",
+            "body": [
+            "patch rect $matTag $numSubdivY $numSubdivZ $yI $zI $yJ $zJ"
+            ],
+            "description": "Patch Rect command"
+      },
+      "patch circ": {
+            "prefix": "patch circ",
+            "body": [
+            "patch circ $matTag $numSubdivCirc $numSubdivRad $yCenter $zCenter $intRad $extRad $startAng $endAng"
+            ],
+            "description": "Patch Circ command"
+      },
+      "layer straight": {
+            "prefix": "layer straight",
+            "body": [
+            "layer straight $matTag $numFiber $areaFiber $yStart $zStart $yEnd $zEnd"
+            ],
+            "description": "Layer Straight command"
+      },
+      "layer circ": {
+            "prefix": "layer circ",
+            "body": [
+            "layer circ $matTag $numFiber $areaFiber $yCenter $zCenter $radius <$startAng $endAng>"
+            ],
+            "description": "Layer Circ command"
+      },
+	// Constraints 
+      "fix": {
+            "prefix": "fix",
+            "body": [
+            "fix $nodeTag (ndf $constrValues)"
+            ],
+            "description": "Fix command"
+      },
+      "fixX": {
+            "prefix": "fixX",
+            "body": [
+            "fixX $xCoordinate (ndf $ConstrValues) <-tol $tol>"
+            ],
+            "description": "Fixx command"
+      },
+      "fixY": {
+            "prefix": "fixY",
+            "body": [
+            "fixY $yCoordinate (ndf $ConstrValues) <-tol $tol>"
+            ],
+            "description": "Fixy command"
+      },
+      "fixZ": {
+            "prefix": "fixZ",
+            "body": [
+            "fixZ $zCoordinate (ndf $ConstrValues) <-tol $tol>"
+            ],
+            "description": "Fixz command"
+      },
+      "equalDOF": {
+            "prefix": "equalDOF",
+            "body": [
+            "equalDOF $rNodeTag $cNodeTag $dof1 $dof2 ..."
+            ],
+            "description": "Equaldof command"
+      },
+      "rigidDiaphragm": {
+            "prefix": "rigidDiaphragm",
+            "body": [
+            "rigidDiaphragm $perpDirn $masterNodeTag $slaveNodeTag1 $slaveNodeTag2 ..."
+            ],
+            "description": "Rigiddiaphragm command"
+      },
+      "rigidLink": {
+            "prefix": "rigidLink",
+            "body": [
+            "rigidLink $type $masterNodeTag $slaveNodeTag"
+            ],
+            "description": "Rigidlink command"
+      },
+	// TimeSeries
+      "timeSeries Constant": {
+            "prefix": "timeSeries Constant",
+            "body": [
+            "timeSeries Constant $tag <-factor $cFactor>"
+            ],
+            "description": "Timeseries Constant command"
+      },
+      "timeSeries Linear": {
+            "prefix": "timeSeries Linear",
+            "body": [
+            "timeSeries Linear $tag <-factor $cFactor>"
+            ],
+            "description": "Timeseries Linear command"
+      },
+      "timeSeries Trig": {
+            "prefix": "timeSeries Trig",
+            "body": [
+            "timeSeries Trig $tag $tStart $tEnd $period <-factor $cFactor> <-shift $shift>"
+            ],
+            "description": "Timeseries Trig command"
+      },
+      "timeSeries Triangle": {
+            "prefix": "timeSeries Triangle",
+            "body": [
+            "timeSeries Triangle $tag $tStart $tEnd $period <-shift $shift> <-factor $cFactor>"
+            ],
+            "description": "Timeseries Triangle command"
+      },
+      "timeSeries Rectangular": {
+            "prefix": "timeSeries Rectangular",
+            "body": [
+            "timeSeries Rectangular $tag $tStart $tEnd <-factor $cFactor>"
+            ],
+            "description": "Timeseries Rectangular command"
+      },
+      "timeSeries Pulse": {
+            "prefix": "timeSeries Pulse",
+            "body": [
+            "timeSeries Pulse $tag $tStart $tEnd $period <-width $pulseWidth> <-shift $shift> <-factor $cFactor>"
+            ],
+            "description": "Timeseries Pulse command"
+      },
+      "timeSeries Path (tcl list, const dt)": {
+            "prefix": "timeSeries Path (tcl list, const dt)",
+            "body": [
+            "timeSeries Path $tag -dt $dt -values {list_of_values} <-factor $cFactor> <-useLast> <-prependZero> <-startTime $tStart>"
+            ],
+            "description": "Timeseries Path (Tcl List, Const Dt) command"
+      },
+      "timeSeries Path (file, const dt)": {
+            "prefix": "timeSeries Path (file, const dt)",
+            "body": [
+            "timeSeries Path $tag -dt $dt -filePath $filePath <-factor $cFactor> <-useLast> <-prependZero> <-startTime $tStart>"
+            ],
+            "description": "Timeseries Path (File, Const Dt) command"
+      },
+      "timeSeries Path (tcl list, var dt)": {
+            "prefix": "timeSeries Path (tcl list, var dt)",
+            "body": [
+            "timeSeries Path $tag -time {list_of_times} -values {list_of_values} <-factor $cFactor> <-useLast>"
+            ],
+            "description": "Timeseries Path (Tcl List, Var Dt) command"
+      },
+      "timeSeries Path (file, var dt)": {
+            "prefix": "timeSeries Path (file, var dt)",
+            "body": [
+            "timeSeries Path $tag -fileTime $fileTime -filePath $filePath <-factor $cFactor> <-useLast>"
+            ],
+            "description": "Timeseries Path (File, Var Dt) command"
+      },
+      "timeSeries PeerMotion": {
+            "prefix": "timeSeries PeerMotion",
+            "body": [
+            "timeSeries PeerMotion $tag $eqMotion $station $type $factor <-dT $dT> <-nPTS $nPts>"
+            ],
+            "description": "Timeseries Peermotion command"
+      },
+      "timeSeries PeerNGAMotion": {
+            "prefix": "timeSeries PeerNGAMotion",
+            "body": [
+            "timeSeries PeerNGAMotion $tag $eqMotion $factor <-dT $dT> <-NPTS $nPts>"
+            ],
+            "description": "Timeseries Peerngamotion command"
+      },
+	// Patterns
+      "pattern Plain": {
+            "prefix": "pattern Plain",
+            "body": [
+            "pattern Plain $patternTag $tsTag <-fact $cFactor> {\n\tload...\n\teleLoad...\n\tsp...\n\t...\n}"
+            ],
+            "description": "Pattern Plain command"
+      },
+      "pattern UniformExcitation": {
+            "prefix": "pattern UniformExcitation",
+            "body": [
+            "pattern UniformExcitation $patternTag $dir -accel $tsTag <-vel0 $vel0> <-fact $cFactor>"
+            ],
+            "description": "Pattern Uniformexcitation command"
+      },
+      "pattern MultipleSupport": {
+            "prefix": "pattern MultipleSupport",
+            "body": [
+            "pattern MultipleSupport $patternTag {\n\tgroundMotion...\n\timposedMotion...\n\t...\n}"
+            ],
+            "description": "Pattern Multiplesupport command"
+      },
+      "load": {
+            "prefix": "load",
+            "body": [
+            "load $nodeTag (ndf $LoadValues)"
+            ],
+            "description": "Load command"
+      },
+      "eleLoad -ele (2D)": {
+            "prefix": "eleLoad -ele (2D)",
+            "body": [
+            "eleLoad -ele $eleTag1 <$eleTag2 ....> -type -beamUniform $Wy <$Wx>"
+            ],
+            "description": "Eleload -Ele (2D) command"
+      },
+      "eleLoad -range (2D)": {
+            "prefix": "eleLoad -range (2D)",
+            "body": [
+            "eleLoad -range $eleTag1 $eleTag2 -type -beamPoint $Py $xL <$Px>"
+            ],
+            "description": "Eleload -Range (2D) command"
+      },
+      "eleLoad -ele (3D)": {
+            "prefix": "eleLoad -ele (3D)",
+            "body": [
+            "eleLoad -ele $eleTag1 <$eleTag2 ....> -type -beamUniform $Wy $Wz <$Wx>"
+            ],
+            "description": "Eleload -Ele (3D) command"
+      },
+      "eleLoad -range (3D)": {
+            "prefix": "eleLoad -range (3D)",
+            "body": [
+            "eleLoad -range $eleTag1 $eleTag2 -type -beamPoint $Py $Pz $xL <$Px>"
+            ],
+            "description": "Eleload -Range (3D) command"
+      },
+      "sp": {
+            "prefix": "sp",
+            "body": [
+            "sp $nodeTag $dofTag $dofValue"
+            ],
+            "description": "Sp command"
+      },
+      "groundMotion Plain": {
+            "prefix": "groundMotion Plain",
+            "body": [
+            "groundMotion $gmTag Plain <-accel $tsTag> <-vel $tsTag> <-disp $tsTag> <-int (IntegratorType intArgs)> <-fact $cFactor>"
+            ],
+            "description": "Groundmotion Plain command"
+      },
+      "groundMotion Interpolated": {
+            "prefix": "groundMotion Interpolated",
+            "body": [
+            "groundMotion $tag Interpolated $gmTag1 $gmTag2 ... -fact $fact1 $fact2 ..."
+            ],
+            "description": "Groundmotion Interpolated command"
+      },
+      "imposedMotion $nodeTag": {
+            "prefix": "imposedMotion $nodeTag",
+            "body": [
+            "imposedMotion $nodeTag $dirn $gMotionTag"
+            ],
+            "description": "Imposedmotion $Nodetag command"
+      },
+	// Recorders
+      "recorder Node": {
+            "prefix": "recorder Node",
+            "body": [
+            "recorder Node <-file $fileName> <-xml $fileName> <-binary $fileName> <-tcp $inetAddress $port> <-precision $nSD> <-timeSeries $tsTag> <-time> <-dT $deltaT> <-closeOnWrite> <-node $node1 $node2 ...> <-nodeRange $startNode $endNode> <-region $regionTag> -dof ($dof1 $dof2 ...) $respType"
+            ],
+            "description": "Recorder Node command"
+      },
+      "recorder EnvelopeNode": {
+            "prefix": "recorder EnvelopeNode",
+            "body": [
+            "recorder EnvelopeNode <-file $fileName> <-xml $fileName> <-precision $nSD> <-time> <-closeOnWrite> <-timeSeries $tsTag> <-node $node1 $node2 ...> <-nodeRange $startNode $endNode> <-region $regionTag> -dof ($dof1 $dof2 ...) $respType"
+            ],
+            "description": "Recorder Envelopenode command"
+      },
+      "recorder Drift": {
+            "prefix": "recorder Drift",
+            "body": [
+            "recorder Drift <-file $fileName> <-xml $fileName> <-binary $fileName> <-tcp $inetAddress $port> <-precision $nSD> <-time> -iNode $inode1 $inode2 ... -jNode $jnode1 $jnode2 ... -dof $dof1 $dof2 ... -perpDirn $perpDirn1 $perpDirn2 ..."
+            ],
+            "description": "Recorder Drift command"
+      },
+      "recorder Element": {
+            "prefix": "recorder Element",
+            "body": [
+            "recorder Element <-file $fileName> <-xml $fileName> <-binary $fileName> <-precision $nSD> <-time> <-closeOnWrite> <-dT $deltaT> <-ele ($ele1 $ele2 ...)> <-eleRange $startEle $endEle> <-region $regTag> $arg1 $arg2 ..."
+            ],
+            "description": "Recorder Element command"
+      },
+      "recorder EnvelopeElement": {
+            "prefix": "recorder EnvelopeElement",
+            "body": [
+            "recorder EnvelopeElement <-file $fileName> <-xml $fileName> <-binary $fileName> <-precision $nSD> <-time> <-closeOnWrite> <-ele ($ele1 $ele2 ...)> <-eleRange $startEle $endEle> <-region $regTag> $arg1 $arg2 ..."
+            ],
+            "description": "Recorder Envelopeelement command"
+      },
+      "recorder plot": {
+            "prefix": "recorder plot",
+            "body": [
+            "recorder plot $fileName $windowTitle $xLoc $yLoc $xPixels $yPixels -columns $xCol0 $yCol0 <-columns $xCol1 $yCol1> ..."
+            ],
+            "description": "Recorder Plot command"
+      },
+      // Print
+      "print": {
+            "prefix": "print",
+            "body": [
+            "print <$fileName>"
+            ],
+            "description": "Print command"
+      },
+      "print -node": {
+            "prefix": "print -node",
+            "body": [
+            "print <$fileName> -node <-flag $flag> <$node1 $node2 ...>"
+            ],
+            "description": "Print -Node command"
+      },
+      "print -ele": {
+            "prefix": "print -ele",
+            "body": [
+            "print <$fileName> -ele <-flag $flag> <$ele1 $ele2 ...>"
+            ],
+            "description": "Print -Ele command"
+      },
+      "printA": {
+            "prefix": "printA",
+            "body": [
+            "printA <-file $fileName>"
+            ],
+            "description": "Printa command"
+      },
+      "logFile": {
+            "prefix": "logFile",
+            "body": [
+            "logFile $fileName <-append>"
+            ],
+            "description": "Logfile command"
+      },
+      // Real time output
+      "eleResponse": {
+            "prefix": "eleResponse",
+            "body": [
+            "eleResponse $eleTag $arg1 $arg2"
+            ],
+            "description": "Eleresponse command"
+      },
+      "nodeDisp": {
+            "prefix": "nodeDisp",
+            "body": [
+            "nodeDisp $nodeTag <$dof>"
+            ],
+            "description": "Nodedisp command"
+      },
+      "nodeVel": {
+            "prefix": "nodeVel",
+            "body": [
+            "nodeVel $nodeTag <$dof>"
+            ],
+            "description": "Nodevel command"
+      },
+      "nodeAccel": {
+            "prefix": "nodeAccel",
+            "body": [
+            "nodeAccel $nodeTag <$dof>"
+            ],
+            "description": "Nodeaccel command"
+      },
+      "nodeEigenvector": {
+            "prefix": "nodeEigenvector",
+            "body": [
+            "nodeEigenvector $nodeTag $eigenvector <$dof>"
+            ],
+            "description": "Nodeeigenvector command"
+      },
+      "getTime": {
+            "prefix": "getTime",
+            "body": [
+            "getTime"
+            ],
+            "description": "Gettime command"
+      },
+      // Contstraints
+      "constraints Plain": {
+            "prefix": "constraints Plain",
+            "body": [
+            "constraints Plain"
+            ],
+            "description": "Constraints Plain command"
+      },
+      "constraints Lagrange": {
+            "prefix": "constraints Lagrange",
+            "body": [
+            "constraints Lagrange <$alphaS $alphaM>"
+            ],
+            "description": "Constraints Lagrange command"
+      },
+      "constraints Penalty": {
+            "prefix": "constraints Penalty",
+            "body": [
+            "constraints Penalty $alphaS $alphaM"
+            ],
+            "description": "Constraints Penalty command"
+      },
+      "constraints Transformation": {
+            "prefix": "constraints Transformation",
+            "body": [
+            "constraints Transformation"
+            ],
+            "description": "Constraints Transformation command"
+      },
+      // Numberers
+      "numberer Plain": {
+            "prefix": "numberer Plain",
+            "body": [
+            "numberer Plain"
+            ],
+            "description": "Numberer Plain command"
+      },
+      "numberer RCM": {
+            "prefix": "numberer RCM",
+            "body": [
+            "numberer RCM"
+            ],
+            "description": "Numberer Rcm command"
+      },
+      "numberer AMD": {
+            "prefix": "numberer AMD",
+            "body": [
+            "numberer AMD"
+            ],
+            "description": "Numberer Amd command"
+      },
+      // Systems
+      "system BandGeneral": {
+            "prefix": "system BandGeneral",
+            "body": [
+            "system BandGeneral"
+            ],
+            "description": "System Bandgeneral command"
+      },
+      "system BandSPD": {
+            "prefix": "system BandSPD",
+            "body": [
+            "system BandSPD"
+            ],
+            "description": "System Bandspd command"
+      },
+      "system ProfileSPD": {
+            "prefix": "system ProfileSPD",
+            "body": [
+            "system ProfileSPD"
+            ],
+            "description": "System Profilespd command"
+      },
+      "system SuperLU": {
+            "prefix": "system SuperLU",
+            "body": [
+            "system SparseGEN"
+            ],
+            "description": "System Superlu command"
+      },
+      "system UmfPack": {
+            "prefix": "system UmfPack",
+            "body": [
+            "system UmfPack <-lvalueFact $LVALUE>"
+            ],
+            "description": "System Umfpack command"
+      },
+      "system FullGeneral": {
+            "prefix": "system FullGeneral",
+            "body": [
+            "system FullGeneral"
+            ],
+            "description": "System Fullgeneral command"
+      },
+      "system SparseSYM": {
+            "prefix": "system SparseSYM",
+            "body": [
+            "system SparseSYM"
+            ],
+            "description": "System Sparsesym command"
+      },
+      "system Mumps": {
+            "prefix": "system Mumps",
+            "body": [
+            "system Mumps"
+            ],
+            "description": "System Mumps command"
+      },
+      "system Cusp": {
+            "prefix": "system Cusp",
+            "body": [
+            "system CuSP -rTol $RTOL -mInt $MINT -pre $PRE -solver $SOLVER"
+            ],
+            "description": "System Cusp command"
+      },
+      // Tests
+      "test NormUnbalance": {
+            "prefix": "test NormUnbalance",
+            "body": [
+            "test NormUnbalance $tol $iter <$pFlag> <$nType>"
+            ],
+            "description": "Test Normunbalance command"
+      },
+      "test NormDispIncr": {
+            "prefix": "test NormDispIncr",
+            "body": [
+            "test NormDispIncr $tol $iter <$pFlag> <$nType>"
+            ],
+            "description": "Test Normdispincr command"
+      },
+      "test EnergyIncr": {
+            "prefix": "test EnergyIncr",
+            "body": [
+            "test EnergyIncr $tol $iter <$pFlag> <$nType>"
+            ],
+            "description": "Test Energyincr command"
+      },
+      "test RelativeNormUnbalance": {
+            "prefix": "test RelativeNormUnbalance",
+            "body": [
+            "test RelativeNormUnbalance $tol $iter <$pFlag> <$nType>"
+            ],
+            "description": "Test Relativenormunbalance command"
+      },
+      "test RelativeNormDispIncr": {
+            "prefix": "test RelativeNormDispIncr",
+            "body": [
+            "test RelativeNormDispIncr $tol $iter <$pFlag> <$nType>"
+            ],
+            "description": "Test Relativenormdispincr command"
+      },
+      "test RelativeTotalNormDispIncr": {
+            "prefix": "test RelativeTotalNormDispIncr",
+            "body": [
+            "test RelativeTotalNormDispIncr $tol $iter <$pFlag> <$nType>"
+            ],
+            "description": "Test Relativetotalnormdispincr command"
+      },
+      "test RelativeEnergyIncr": {
+            "prefix": "test RelativeEnergyIncr",
+            "body": [
+            "test RelativeEnergyIncr $tol $iter <$pFlag> <$nType>"
+            ],
+            "description": "Test Relativeenergyincr command"
+      },
+      "test FixedNumIter": {
+            "prefix": "test FixedNumIter",
+            "body": [
+            "test FixedNumIter $iter <$pFlag> <$nType>"
+            ],
+            "description": "Test Fixednumiter command"
+      // Algorithms
+      },
+      "algorithm Linear": {
+            "prefix": "algorithm Linear",
+            "body": [
+            "algorithm Linear <-initial> <-factorOnce>"
+            ],
+            "description": "Algorithm Linear command"
+      },
+      "algorithm Newton": {
+            "prefix": "algorithm Newton",
+            "body": [
+            "algorithm Newton <-initial> <-initialThenCurrent>"
+            ],
+            "description": "Algorithm Newton command"
+      },
+      "algorithm NewtonLineSearch": {
+            "prefix": "algorithm NewtonLineSearch",
+            "body": [
+            "algorithm NewtonLineSearch <-type $typeSearch> <-tol $tol> <-maxIter $maxIter> <-minEta $minEta> <-maxEta $maxEta>"
+            ],
+            "description": "Algorithm Newtonlinesearch command"
+      },
+      "algorithm ModifiedNewton": {
+            "prefix": "algorithm ModifiedNewton",
+            "body": [
+            "algorithm ModifiedNewton <-initial>"
+            ],
+            "description": "Algorithm Modifiednewton command"
+      },
+      "algorithm KrylovNewton": {
+            "prefix": "algorithm KrylovNewton",
+            "body": [
+            "algorithm KrylovNewton <-iterate $tangIter> <-increment $tangIncr> <-maxDim $maxDim>"
+            ],
+            "description": "Algorithm Krylovnewton command"
+      },
+      "algorithm SecantNewton": {
+            "prefix": "algorithm SecantNewton",
+            "body": [
+            "algorithm SecantNewton <-iterate $tangIter> <-increment $tangIncr> <-maxDim $maxDim>"
+            ],
+            "description": "Algorithm Secantnewton command"
+      },
+      "algorithm BFGS": {
+            "prefix": "algorithm BFGS",
+            "body": [
+            "algorithm BFGS"
+            ],
+            "description": "Algorithm Bfgs command"
+      },
+      "algorithm Broyden": {
+            "prefix": "algorithm Broyden",
+            "body": [
+            "algorithm Broyden <$count>"
+            ],
+            "description": "Algorithm Broyden command"
+      },
+      // Integrators
+      "integrator LoadControl": {
+            "prefix": "integrator LoadControl (static)",
+            "body": [
+            "integrator LoadControl $lambda <$numIter $minLambda $maxLambda>"
+            ],
+            "description": "Integrator Loadcontrol command"
+      },
+      "integrator DisplacementControl": {
+            "prefix": "integrator DisplacementControl (static)",
+            "body": [
+            "integrator DisplacementControl $node $dof $incr <$numIter $ΔUmin $ΔUmax>"
+            ],
+            "description": "Integrator Displacementcontrol command"
+      },
+      "integrator MinUnbalDispNorm": {
+            "prefix": "integrator MinUnbalDispNorm (static)",
+            "body": [
+            "integrator MinUnbalDispNorm $dlambda1 <$Jd $minLambda $maxLambda>"
+            ],
+            "description": "Integrator Minunbaldispnorm command"
+      },
+      "integrator ArcLength": {
+            "prefix": "integrator ArcLength (static)",
+            "body": [
+            "integrator ArcLength $s $alpha"
+            ],
+            "description": "Integrator Arclength command"
+      },
+      "integrator CentralDifference": {
+            "prefix": "integrator CentralDifference (transient)",
+            "body": [
+            "integrator CentralDifference"
+            ],
+            "description": "Integrator Centraldifference command"
+      },
+      "integrator Newmark": {
+            "prefix": "integrator Newmark (transient)",
+            "body": [
+            "integrator Newmark $gamma $beta"
+            ],
+            "description": "Integrator Newmark command"
+      },
+      "integrator HHT": {
+            "prefix": "integrator HHT (transient)",
+            "body": [
+            "integrator HHT $alpha <$gamma $beta>"
+            ],
+            "description": "Integrator Hht command"
+      },
+      "integrator GeneralizedAlpha": {
+            "prefix": "integrator GeneralizedAlpha (transient)",
+            "body": [
+            "integrator GeneralizedAlpha $alphaM $alphaF <$gamma $beta>"
+            ],
+            "description": "Integrator Generalizedalpha command"
+      },
+      "integrator TRBDF2": {
+            "prefix": "integrator TRBDF2 (transient)",
+            "body": [
+            "integrator TRBDF2"
+            ],
+            "description": "Integrator Trbdf2 command"
+      // Analysis
+      },
+      "analysis Static": {
+            "prefix": "analysis Static",
+            "body": [
+            "analysis Static"
+            ],
+            "description": "Analysis Static command"
+      },
+      "analysis Transient": {
+            "prefix": "analysis Transient",
+            "body": [
+            "analysis Transient"
+            ],
+            "description": "Analysis Transient command"
+      },
+      "analysis VariableTransient": {
+            "prefix": "analysis VariableTransient",
+            "body": [
+            "analysis VariableTransient"
+            ],
+            "description": "Analysis Variabletransient command"
+      },
+      "eigen ": {
+            "prefix": "eigen",
+            "body": [
+            "eigen <$solver> $numEigenvalues"
+            ],
+            "description": "Eigen  command"
+      },
+      "analyze": {
+            "prefix": "analyze",
+            "body": [
+            "analyze $numIncr <$dt> <$dtMin $dtMax $Jd>"
+            ],
+            "description": "Analyze command"
+      },
+      // Misc. commands
+      "exit": {
+            "prefix": "exit",
+            "body": [
+            "exit"
+            ],
+            "description": "Exit command"
+      },
+      "loadConst": {
+            "prefix": "loadConst",
+            "body": [
+            "loadConst <-time $pseudoTime>"
+            ],
+            "description": "Loadconst command"
+      },
+      "remove element": {
+            "prefix": "remove element",
+            "body": [
+            "remove element $eleTag"
+            ],
+            "description": "Remove Element command"
+      },
+      "remove node": {
+            "prefix": "remove node",
+            "body": [
+            "remove node $nodeTag"
+            ],
+            "description": "Remove Node command"
+      },
+      "remove loadPattern": {
+            "prefix": "remove loadPattern",
+            "body": [
+            "remove loadPattern $patternTag"
+            ],
+            "description": "Remove Loadpattern command"
+      },
+      "remove parameter": {
+            "prefix": "remove parameter",
+            "body": [
+            "remove parameter $paramTag"
+            ],
+            "description": "Remove Parameter command"
+      },
+      "remove recorders": {
+            "prefix": "remove recorders",
+            "body": [
+            "remove recorders"
+            ],
+            "description": "Remove Recorders command"
+      },
+      "remove recorder": {
+            "prefix": "remove recorder",
+            "body": [
+            "remove recorder $tag"
+            ],
+            "description": "Remove Recorder command"
+      },
+      "remove sp": {
+            "prefix": "remove sp",
+            "body": [
+            "remove sp $nodeTag $dof"
+            ],
+            "description": "Remove Sp command"
+      },
+      "remove mp": {
+            "prefix": "remove mp",
+            "body": [
+            "remove mp $constrainedNodeTag"
+            ],
+            "description": "Remove Mp command"
+      },
+      "reset": {
+            "prefix": "reset",
+            "body": [
+            "reset"
+            ],
+            "description": "Reset command"
+      },
+      "setMaxOpenFiles": {
+            "prefix": "setMaxOpenFiles",
+            "body": [
+            "setMaxOpenFiles $maxNumFiles"
+            ],
+            "description": "Setmaxopenfiles command"
+      },
+      "setTime": {
+            "prefix": "setTime",
+            "body": [
+            "setTime $pseudoTime"
+            ],
+            "description": "Settime command"
+      },
+      "testIter": {
+            "prefix": "testIter",
+            "body": [
+            "testIter"
+            ],
+            "description": "Testiter command"
+      },
+      "testNorms": {
+            "prefix": "testNorms",
+            "body": [
+            "testNorms"
+            ],
+            "description": "Testnorms command"
+      },
+      "wipe": {
+            "prefix": "wipe",
+            "body": [
+            "wipe"
+            ],
+            "description": "Wipe command"
+      },
+      "wipeAnalysis": {
+            "prefix": "wipeAnalysis",
+            "body": [
+            "wipeAnalysis"
+            ],
+            "description": "Wipeanalysis command"
+      },
+// ========================================================================== //
+//                               OpenSees Help                                //
+// ========================================================================== //
+      // Links
+      "Link-Basic Examples Manual": {
+            "prefix": "Link - Basic Examples Manual",
+            "body": [
+            "http://opensees.berkeley.edu/wiki/index.php/Basic_Examples_Manual"
+            ],
+            "description": "Load the web url of the OpenSees basic examples manual"
+      },
+      "Link-Advanced Examples Manual": {
+            "prefix": "Link - Advanced Examples Manual",
+            "body": [
+            "http://opensees.berkeley.edu/wiki/index.php/Examples_Manual"
+            ],
+            "description": "Load the web url of the OpenSees  advanced examples manual"
+      },
+      "Link-Command Manual": {
+            "prefix": "Link - Command Manual",
+            "body": [
+            "http://opensees.berkeley.edu/wiki/index.php/Command_Manual"
+            ],
+            "description": "Load the web url of the OpenSees command maunal"
+      },
+      "Link-Discussion board": {
+            "prefix": "Link - Discussion board",
+            "body": [
+            "http://opensees.berkeley.edu/community/index.php"
+            ],
+            "description": "Load the web url of the OpenSees discussion board"
+      },
+      // Examples
+      "Example-Truss": {
+            "prefix": "Example - Truss",
+            "body": [
+            "# Full documentation at:\n# http://opensees.berkeley.edu/wiki/index.php/Basic_Examples_Manual\n\n# OpenSees -- Open System for Earthquake Engineering Simulation\n# Pacific Earthquake Engineering Research Center\n# http://opensees.berkeley.edu/\n#\n# Basic Truss Example\n# ----------------------\n#  2d 3 Element Elastic Truss\n#  Single Nodal Load, Static Analysis\n#\n# Example Objectives\n# -----------------\n#  Simple Introduction to OpenSees\n#\n# Units: kips, in, sec\n# Written: fmk\n# Date: January 2001\n\n# ------------------------------\n# Start of model generation\n# ------------------------------\n\n# Remove existing model\nwipe\n\n# Create ModelBuilder (with two-dimensions and 2 DOF/node)\nmodel BasicBuilder -ndm 2 -ndf 2\n\n# Create nodes\n# ------------\n\n# Create nodes & add to Domain - command: node nodeId xCrd yCrd\nnode 1   0.0  0.0\nnode 2 144.0  0.0\nnode 3 168.0  0.0\nnode 4  72.0 96.0\n\n# Set the boundary conditions - command: fix nodeID xResrnt? yRestrnt?\nfix 1 1 1\nfix 2 1 1\nfix 3 1 1\n\n# Define materials for truss elements\n# -----------------------------------\n\n# Create Elastic material prototype - command: uniaxialMaterial Elastic matID E\nuniaxialMaterial Elastic 1 3000\n\n# Define elements\n# ---------------\n\n# Create truss elements - command: element truss trussID node1 node2 A matID\nelement Truss 1 1 4 10.0 1\nelement Truss 2 2 4  5.0 1\nelement Truss 3 3 4  5.0 1\n\n# Define loads\n# ------------\n\n#create a Linear TimeSeries (load factor varies linearly with time): command timeSeries Linear $tag\ntimeSeries Linear 1\n\n# Create a Plain load pattern with a linear TimeSeries: command pattern Plain $tag $timeSeriesTag { $loads }\npattern Plain 1 1 {\n\n    # Create the nodal load - command: load nodeID xForce yForce\n    load 4 100 -50\n}\n\n# ------------------------------\n# Start of analysis generation\n# ------------------------------\n\n# Create the system of equation, a SPD using a band storage scheme\nsystem BandSPD\n\n# Create the DOF numberer, the reverse Cuthill-McKee algorithm\nnumberer RCM\n\n# Create the constraint handler, a Plain handler is used as homo constraints\nconstraints Plain\n\n# Create the integration scheme, the LoadControl scheme using steps of 1.0\nintegrator LoadControl 1.0\n\n# Create the solution algorithm, a Linear algorithm is created\nalgorithm Linear\n\n# create the analysis object\nanalysis Static\n\n# ------------------------------\n# Start of recorder generation\n# ------------------------------\n\n# create a Recorder object for the nodal displacements at node 4\nrecorder Node -file example.out -time -node 4 -dof 1 2 disp\n\n# Create a recorder for element forces, one in global and the other local system\nrecorder Element -file eleGlobal.out -time -ele 1 2 3 forces\nrecorder Element -file eleLocal.out -time -ele 1 2 3  basicForces\n\n# ------------------------------\n# Finally perform the analysis\n# ------------------------------\n\n# Perform the analysis\nanalyze 1\n\n# ------------------------------\n# Print Stuff to Screen\n# ------------------------------\n\n# Print the current state at node 4 and at all elements\nputs \"node 4 displacement: [nodeDisp 4]\"\nprint node 4\nprint ele"
+            ],
+            "description": "Load truss example"
+      },
+      // Templates
+      "Template": {
+            "prefix": "Template",
+            "body": [
+            "# ============================================================================ #\n#                                 Model Title                                  #\n# \n# Description: Model description\n# Units: kg, m, s\n#\n# Written: Star Lord\n# Date: dd / mm / 20XX\n# ============================================================================ #\n\n\n# Model definition\n# ---------------------------------------------------------------------------- #\n\nwipe\nmodel BasicBuilder -ndm $ndm <-ndf $ndf>\n\n# Create nodes\nnode $nodeTag (ndm $coords)\nnode $nodeTag (ndm $coords)\n# continue adding all nodes...\n\n# Set boundary conditions\nfix $nodeTag (ndf $constrValues)\n# continue adding all boundary conditions...\n\n# Define materials\nuniaxialMaterial Elastic $matTag $E <$eta> <$Eneg>\nuniaxialMaterial Steel01 $matTag $Fy $E0 $b <$a1 $a2 $a3 $a4>\n# continue defining all materials...\n\n# Create elements\nelement truss $eleTag $iNode $jNode $A $matTag <-rho $rho> <-cMass $cFlag> <-doRayleigh $rFlag>\n# continue creating all elements...\n\n# Define loads\ntimeSeries Linear $tag <-factor $cFactor>\npattern Plain $patternTag $tsTag <-fact $cFactor> {\n	load...\n	eleLoad...\n	sp...\n	...\n}\n\n\n# Analysis generation\n# ---------------------------------------------------------------------------- #\n\nconstraints ...\nnumberer ...\nsystem ...\ntest ...\nalgorithm ...\nintegrator ...\nanalysis ...\n\n\n# Analysis generation\n# ---------------------------------------------------------------------------- #\n\n# Node recorders\nrecorder Node <-file $fileName> <-xml $fileName> <-binary $fileName> <-tcp $inetAddress $port> <-precision $nSD> <-timeSeries $tsTag> <-time> <-dT $deltaT> <-closeOnWrite> <-node $node1 $node2 ...> <-nodeRange $startNode $endNode> <-region $regionTag> -dof ($dof1 $dof2 ...) $respType\n# continue adding required node recorders...\n\n# Element recorders\nrecorder Element <-file $fileName> <-xml $fileName> <-binary $fileName> <-precision $nSD> <-time> <-closeOnWrite> <-dT $deltaT> <-ele ($ele1 $ele2 ...)> <-eleRange $startEle $endEle> <-region $regTag> $arg1 $arg2 ...\n# continue adding required element recorders...\n\n# Other recoders\n# add any other recorders...\n\n\n# Perform analysis\n# ---------------------------------------------------------------------------- #\n\nanalyze $numIncr <$dt> <$dtMin $dtMax $Jd>\n\n# Print some things\nputs \"node A displacement: [nodeDisp A]\"\nprint node B\nprint ele C\n# continue adding printed information..."
+            ],
+            "description": "Load model template"
+      },
+
+// ========================================================================== //
+//                                TCL snippets                                //
+// ========================================================================== //
+      "For Loop": {
+	      "prefix": "for",
+		"body": [
+            "for \\{set ${index} 0\\} \\{ \\$${index} < ${length} \\} \\{ incr ${index} \\} \\{",
+            "\t$0",
+            "}"
+		],
+		"description": "For Loop"
+	},
+	"Foreach Loop": {
+		"prefix": "foreach",
+		"body": [
+            "foreach ${var} ${list} \\{",
+            "\t$0",
+            "}"
+		],
+		"description": "Foreach Loop"
+	},
+	"If Condition": {
+		"prefix": "if",
+		"body": [
+            "if \\{${var}\\} \\{",
+            "\t$0",
+            "}"
+		],
+		"description": "If Condition"
+	},
+	"ElseIf Condition": {
+		"prefix": "elseif",
+		"body": [
+            "elseif \\{${var}\\} \\{",
+            "\t$0",
+            "}"
+		],
+		"description": "ElseIf Condition"
+	},
+	"Else Block": {
+		"prefix": "else",
+		"body": [
+            "else \\{",
+            "\t$0",
+            "}"
+		],
+		"description": "Else Block"
+	},
+	"Proc Block": {
+		"prefix": "proc",
+		"body": [
+            "proc ${name} \\{${args}\\} \\{",
+            "\t$0",
+            "}"
+		],
+		"description": "Proc Block"
+	},
+	"While Lopp": {
+		"prefix": "while",
+		"body": [
+            "while \\{${var}\\} \\{",
+            "\t$0",
+            "}"
+		],
+		"description": "While Loop"
+	}
+}

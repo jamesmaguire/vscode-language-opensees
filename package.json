@@ -1,0 +1,50 @@
+{
+	"name": "vscode-language-opensees",
+	"displayName": "OpenSees Language",
+	"description": "TCL language support extended for OpenSees commands",
+	"version": "0.0.0",
+	"publisher": "jamesmaj",
+	"engines": {
+		"vscode": "^1.0.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/JamesMaj/vscode-language-opensees"
+	},
+	"categories": [
+		"Languages"
+	],
+	"galleryBanner": {
+		"color": "#007eff",
+		"theme": "light"
+	},
+	"contributes": {
+		"languages": [
+			{
+				"id": "opensees",
+				"aliases": [
+					"Opensees",
+					"OpenSees",
+					"opensees"
+				],
+				"extensions": [
+					".tcl"
+				],
+				"configuration": "./opensees.configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "opensees",
+				"scopeName": "source.opensees",
+				"path": "./syntaxes/opensees.tmLanguage"
+			}
+		],
+        "snippets": [
+            {
+                "language": "opensees",
+                "path": "./snippets/opensees.json"
+            }
+        ]
+	}
+}
