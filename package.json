@@ -14,10 +14,8 @@
 	"categories": [
 		"Languages"
 	],
-	"galleryBanner": {
-		"color": "#007eff",
-		"theme": "light"
-	},
+	"icon": "marketplace-icon.png",
+	"galleryBanner": {"color": "#4c4c4c"},
 	"contributes": {
 		"languages": [
 			{
