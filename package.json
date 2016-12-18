@@ -2,7 +2,7 @@
     "name": "vscode-language-opensees",
     "displayName": "OpenSees Language",
     "description": "TCL language support extended for OpenSees commands",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "publisher": "jamesmaj",
     "engines": {
         "vscode": "^1.0.0"
@@ -16,7 +16,8 @@
     ],
     "icon": "marketplace-icon.png",
     "galleryBanner": {
-        "color": "#4c4c4c"
+        "color": "#4c4c4c",
+        "theme": "dark"
     },
     "contributes": {
         "languages": [
